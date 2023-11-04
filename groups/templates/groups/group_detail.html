@@ -1,0 +1,44 @@
+{% extends "groups/group_base.html" %}
+
+{% block pregroup %}
+
+
+<h1 class="gdtitle">{{group.name}}</h1>
+<p class="gddesc">Description:  <strong>   {{ group.description }}</strong></p>
+<h4 class="gdfollowers"> Followers: {{group.members.count}}</h4>
+
+  <div class="content">
+
+
+				{% if user in group.members.all %}
+					<a href="{% url 'groups:leave' slug=group.slug %}" class="btn btn-lg btn-fill btn-warning"><span class="glyphicon glyphicon-remove-circle"></span> Unfollow</a>
+				{% else %}
+					<a href="{% url 'groups:join' slug=group.slug %}" class="btn btn-lg btn-fill btn-warning"><span class="glyphicon glyphicon-ok-circle"></span> Follow</a>
+				{% endif %}
+
+
+
+</div>
+
+{% endblock %}
+
+
+{% block group_content %}
+
+
+<div class="container-fluid">
+<div>
+	<h3>ARTICLES: </h3>
+	{% if group.articles.count == 0 %}
+
+	<h2>NO ARTCILES YET  </h2>
+	{% else %}
+	{% for article in group.articles.all %}
+	{% include "articles/_article.html" %}
+	{% endfor %}
+	{% endif %}
+</div>
+
+</div>
+{% endblock %}
+

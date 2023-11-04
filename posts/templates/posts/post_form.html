@@ -1,0 +1,17 @@
+{% extends 'posts/post_base.html' %}
+{% load bootstrap3 %}
+
+{% block content %}
+<form   id="postform" action="{% url 'posts:create' %}" method="post" class="articleform">
+
+
+    {% csrf_token %}
+    {% bootstrap_form form %}
+
+<input type="submit" value="Post Comment" id="" class="btn btn-primary">
+
+</form>
+<a href="{% url 'posts:for_user' username=user.username %}">VIEW YOUR COMMENTS</a>
+
+
+{% endblock %}

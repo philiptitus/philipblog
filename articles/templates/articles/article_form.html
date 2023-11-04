@@ -1,0 +1,13 @@
+{% extends "articles/article_base.html "%}
+{% block content %}
+{% load bootstrap3 %}
+<div class="container">
+    <form action="{% url 'articles:create' %}" method="post" class="articleform">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <input type="submit" value="ADD ARTICLE" class="btn btn-warning">
+    </form>
+    <a href="{% url 'articles:for_user' username=user.username %}">VIEW  YOUR ARTICLES</a>
+
+</div>
+{% endblock %}

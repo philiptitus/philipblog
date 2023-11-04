@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{%  block content %}
+<div class="container-fluid">
+    <h3>Welcome:  </h3>
+    <h5><strong>@ {{ user.username }}</strong></h5>
+    <h3>View your comments and articles below:  </h3>
+    <strong><h5><a href="{% url 'posts:for_user' username=user.username %}">YOUR COMMENTS</a></h5></strong>
+    <strong><h5><a href="{% url 'articles:for_user' username=user.username %}">YOUR ARTICLES</a></h5></strong>
+
+</div>
+{% endblock %}

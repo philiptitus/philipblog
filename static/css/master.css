@@ -1,0 +1,96 @@
+body{
+  background-color:black;
+  color:rgb(255, 255, 255);
+  margin: auto;
+  
+}
+p{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+h1{
+    font-family: fantasy;
+}
+h2{
+    font-family: monospace;
+    font-weight: 500;
+    
+}
+h3{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+h4{
+    font-family: sans-serif;
+}
+h5{
+    font-family: 'Times New Roman', Times, serif;
+}
+h6{
+    font-family: cursive;
+}
+.list-group {
+    margin: 50px 0 0 150px; /* top 0px, right 0px, bottom 0px, left 150px */
+}
+.gdtitle{
+    text-align: center;
+}
+.gdfollowers{
+    text-align: right;
+    text-decoration: dashed;
+}
+.gddesc{
+    text-align: center;
+}
+.articleform{
+    font-style: italic;
+    
+}
+.centerform{
+    text-align: center;
+}
+
+
+.login-box .user-box input {
+  width: 100%;
+  padding: 10px 0;
+  font-size: 16px;
+  color: #fff;
+  margin-bottom: 30px;
+  border: none;
+  border-bottom: 1px solid #fff;
+  outline: none;
+  background: transparent;
+}
+
+.login-box .user-box label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 10px 0;
+  font-size: 16px;
+  color: #fff;
+  pointer-events: none;
+  transition: .5s;
+}
+
+.login-box .user-box input:focus ~ label,
+.login-box .user-box input:valid ~ label {
+  top: -20px;
+  left: 0;
+  color: #03e9f4;
+  font-size: 12px;
+}
+.login-box .user-box input::placeholder {
+  /* Remove any styles for the placeholder text */
+}
+
+
+
+
+
+
+
+
+
+
+
+

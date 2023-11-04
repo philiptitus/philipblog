@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+  <h1>Great logged in!   @{{ user.username }}</h1>
+  <h3>Now you can: </h3>
+  <h5><a href="{% url 'groups:all'%}">VIEW POPULAR TOPICS</a></h5>
+
+
+</div>
+
+
+
+
+{% endblock %}
