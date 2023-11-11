@@ -1,49 +1,102 @@
-<!-- {% block prearticle %}
-<h5>@{{ user.username }}'s  Articles</h5>
+{% block prearticle %}
 {% endblock %}
 
+{% block article_content %}
+<div class="col-md-8 carder">
 
-{% block article_content %} -->
-<div class="article-media">
-    <h3><strong><a href="{% url 'articles:single' username=article.user.username pk=article.pk %}">{{ article.title|safe }}</a></strong></h3>
-    
-    </strong></h2>
-    <h5> {{ article.message_html|safe }} </h5>
-    <div class="media-body">
-        <h5 class="media-heading">
-            <span class="username"><a href="{% url 'articles:for_user' username=article.user.username %}">by -- @{{ article.user.username }}</a></span>
-            <time class="time">{{ article.created_date }}</time>
-            {% if article.group %}
-            <span class="group-name">in <a href="{% url 'groups:single' slug=article.group.slug %}">{{ article.group.name }}</a></span>
-            {% endif %}
-        </h5>
-        <div class="media-footer">
-            {% if user.is_authenticated  and article.user == user and not hide_delete %}
-            <a href="{% url 'articles:delete'  pk=article.pk %}" title="delete" class="btn btn-danger">
-            <span class="glyphicon glyphicon-remove text-danger" aria-hidden="true"></span>
-			<span class="text-danger icon-label">Delete</span>
-        </a>
-        {% endif %}
+<div class="card mb-4 custom-card" style="border: 2px solid #ccc; width: auto; margin: 0 auto;">
+    <div class="card-body">
+        <h3 class="card-title">
+            <strong><a href="{% url 'articles:single' username=article.user.username pk=article.pk %}">{{ article.title|safe }}</a></strong>
+        </h3>
+
+        <div class="image-container text-center my-5">
+            <img src="{{ article.image.url }}" alt="{{ article.title }}" class="img-fluid image" style="width: 678px"/>
+        </div>
+
+        <h5 class="card-text">{{ article.message_html|safe }}</h5>
+
+        <div class="media-body">
+            <h5 class="media-heading">
+                <span class="username">
+                    <a href="{% url 'articles:for_user' username=article.user.username %}">by -- @{{ article.user.username }}</a>
+                </span>
+                <time class="time">{{ article.created_date }}</time>
+
+            </h5>
+            <br>
+            <span class="badge">{{ article.total_likes }}</span> like{{ article.total_likes|pluralize }}
+            <span class="badge">{{ article.total_bookmarks }}</span> bookmark{{ article.total_likes|pluralize }}
+
+
+            <br>
+            <div class="media-footer">
+                {% if user.is_authenticated and article.user == user and not hide_delete %}
+                    <a href="{% url 'articles:delete' pk=article.pk %}" title="delete" class="btn btn-danger">
+                        <span class="glyphicon glyphicon-remove text-danger" aria-hidden="true"></span>
+                        <span class="text-danger icon-label">Delete</span>
+                    </a>
+                {% endif %}
+            </div>
         </div>
     </div>
+    <form method="post" action="{% url 'articles:like_article' article.pk %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-warning">
+            <span class="glyphicon glyphicon-heart"></span> 
+        </button>
+    </form>
+    
+    <form method="post" action="{% url 'articles:bookmark_article' article.pk %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-info">
+            <span class="glyphicon glyphicon-bookmark"></span> 
+        </button>
+    </form>
+    
+
+
+    <div class="card-footer">
+        {% if article.posts.count == 0 %}
+<!-- Add comment link with article_id parameter -->
+<h6><a href="{% url 'posts:specific' article_id=article.pk %}">Add comment+</a></h6>
+
+            <h5>No comments available yet..</h5>
+        {% else %}
+<!-- Add comment link with article_id parameter -->
+<h6><a href="{% url 'posts:specific' article_id=article.pk %}">Add comment+</a></h6>
+
+            <h5>Comments:</h5>
+            <div class="col-md-4">
+                <span class="badge">{{ article.posts.count }}</span> Comment{{ article.posts.count|pluralize }}
+            </div>
+           
+            <hr>
+            {% for post in article.posts.all %}
+                {% include "posts/_post.html" %}
+            {% endfor %}
+            
+        {% endif %}
+        {% if article.group %}
+        
+            <span class="group-name">
+                
+                 <a href="{% url 'groups:single' slug=article.group.slug %}">{{ article.group.name }}</a>
+                
+            </span>
+        
+    {% endif %}
+       
+    </div>
+    
 </div>
-<div class="container-fluid">
-	<div>
-		{% if article.posts.count == 0 %}
-	
-		<h5> No comments available yet.. </h5>
-		{% else %}
-        <h5>Comments:  </h5>
-        <div class="col-md-4">
-            <span class="badge">{{ article.posts.count }}</span> Comment{{ group.articles.count|pluralize }}
-        </div>
-        <br>
-        <hr>
-		{% for post in article.posts.all %}
-		{% include "posts/_post.html" %}
-		{% endfor %}
-		{% endif %}
-	</div>
-	
-	</div>
+<br>
+<br>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 {% endblock %}

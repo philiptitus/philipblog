@@ -1,0 +1,11 @@
+{% extends "articles/article_base.html" %}
+
+{% block article_content %}
+
+{% for article in bookmarked_articles %}
+<h5>{{ article.name }}</h5>
+{% endfor %}
+
+
+
+{% endblock %}

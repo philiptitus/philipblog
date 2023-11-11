@@ -4,9 +4,13 @@
 
 
 <h1 class="gdtitle">{{group.name}}</h1>
-<p class="gddesc">Description:  <strong>   {{ group.description }}</strong></p>
-<h4 class="gdfollowers"> Followers: {{group.members.count}}</h4>
+<p class="gddesc"><strong>   {{ group.description }}</strong></p>
+<div class="col-md-4">
+	<span class="badge">{{ group.members.count }}</span> Follower{{ group.members.count|pluralize }}
+</div>
 
+<br>
+<hr>
   <div class="content">
 
 

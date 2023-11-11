@@ -1,14 +1,15 @@
 {% extends "base.html" %}
 {% block content %}
+{% load static %}
 <div class="container">
-  <h1>Great logged in!   @{{ user.username }}</h1>
-  <h3>Now you can: </h3>
-  <h5><a href="{% url 'groups:all'%}">VIEW POPULAR TOPICS</a></h5>
+  <h1>HI!   <a href="{% url 'profile' %}">@{{ user.username }}</a></h1>
+  <h5><a href="{% url 'home'%}">VIEW FOLLOWING ARTICLES..</a></h5>
 
 
 </div>
 
 
 
-
+<link rel="stylesheet" href="{% static 'footballnews/css/master2.css'%}">
+<link rel="stylesheet" href="{% static 'footballnews/js/master3.css'%}">
 {% endblock %}

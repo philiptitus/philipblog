@@ -1,0 +1,9 @@
+<!-- search_form.html -->
+{% extends 'base.html' %}
+{% block content %}
+<form method="get" action="{% url 'search' %}">
+    {{ form.query.label_tag }}
+    {{ form.query }}
+    <button type="submit">Search</button>
+</form>
+{% endblock %}

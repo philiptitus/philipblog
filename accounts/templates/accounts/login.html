@@ -4,7 +4,7 @@
 {% block content %}
 {% load static %}
 <div class="login-box">
-  <h2>Login To get started</h2>
+  <h2>LOGIN</h2>
   <form  method="post">
     <div class="user-box">
       
@@ -22,7 +22,12 @@
     </div>
 
   </form>
+  <h6>No account yet? </h6>
+  <a href="{% url 'accounts:signup' %}" class="btn"><h5>SIGN UP!</h5></a>
 </div>
-<link rel="stylesheet" href="{% static 'footballnews/css/master.css'%}">
+<link rel="stylesheet" href="{%  static  "css/master.css" %}">
 
 {% endblock %}
+Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt, harum atque.
+ Ex repudiandae cum dignissimos, quibusdam odio sunt ad sit eaque, 
+ quas a assumenda voluptatibus recusandae delectus nihil error. Quo!

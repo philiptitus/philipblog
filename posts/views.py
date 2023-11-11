@@ -3,9 +3,12 @@ from django.db.models.query import QuerySet
 from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin
 from . import models,forms
+from articles.models import Article
 from django.contrib import messages
+from .forms import CreatePostSpecificForm
+from django.shortcuts import get_object_or_404
 from django.views import generic
-from django.http import Http404
+from django.http import Http404,HttpResponse
 from django.urls import reverse_lazy
 from braces.views import SelectRelatedMixin
 from django.contrib.auth import get_user_model
@@ -64,17 +67,38 @@ class CreatePost(LoginRequiredMixin, SelectRelatedMixin, generic.CreateView):
         self.object.user = self.request.user
         self.object.save()
         return super().form_valid(form)
+    
+class CreatePostSpecific(LoginRequiredMixin, SelectRelatedMixin, generic.CreateView):
+    model = models.Post
+    form_class = CreatePostSpecificForm
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.user = self.request.user
+        self.object.save()
+        return super().form_valid(form)
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['article_id'] = self.kwargs.get('article_id')  # Pass article_id from URL parameters to the form
+        return kwargs
+
+
+
 
 
 class DeletePost(LoginRequiredMixin,SelectRelatedMixin,generic.DeleteView):
       model = models.Post
       select_related = ("user","article")
-      success_url = reverse_lazy("posts:all")        
+      success_url = reverse_lazy("profile")        
                 
 
       def get_queryset(self):
         queryset = super().get_queryset()
-        return queryset.filter(user_id=self.request.user.id)
+        if queryset.exists():
+            return queryset.filter(user_id=self.request.user.id)
+        else:
+             HttpResponse('You already deleted this comment silly:)')
 
       def delete(self, *args, **kwargs):
           messages.success(self.request, "Post Deleted")

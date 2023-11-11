@@ -1,23 +1,97 @@
-{% extends "base.html" %}
-{% block content %}
-{% load static %}
+{% extends "articles/article_base.html" %}
 
-    <h1>Welcome to Philip Blog</h1>
-    <h2>Let us Talk Football</h2>
-    <h2>Login or Sign-up for free to get started!</h2>
+{% block article_content %}
+{% if user.is_authenticated %}
+<h1 class="grand">FOLLOWING</h1>
+{% for article in articles %}
+<div class="card mb-4 custom-card" style="border: 2px solid #ccc; width: 60%; margin: 0 auto;">
+    <div class="card-body">
+        <h3 class="card-title">
+            <strong><a href="{% url 'articles:single' username=article.user.username pk=article.pk %}">{{ article.title|safe }}</a></strong>
+        </h3>
+
+        <div class="image-container text-center my-5 image" style="border: 2px solid rgb(2, 2, 2);  margin: 0 auto;">
+            <a href="{% url 'articles:single' username=article.user.username pk=article.pk %}"><img src="{{ article.image.url }}" alt="{{ article.title }}" class="img-fluid image" style="width: 650px; "></a>
+        </div>
+        
+        <h5 class="card-text">{{ article.message_html|safe }}</h5>
+        
+        <div class="media-body">
+            <h5 class="media-heading">
+                <span class="username">
+                    <a href="{% url 'articles:for_user' username=article.user.username %}">by -- @{{ article.user.username }}</a>
+                </span>
+                <time class="time">{{ article.created_date }}</time>
+
+            </h5>
+            <div class="media-footer">
+
+                
+                <span class="badge">{{ article.total_likes }}</span> like{{ article.total_likes|pluralize }}
+                <span class="badge">{{ article.total_bookmarks }}</span> bookmark{{ article.total_likes|pluralize }}
 
 
-    
-    <div id="root">
-        <div class="layer layer-1"></div>
-        <div class="layer layer-2"></div>
-        <div class="layer layer-3"></div>
-        <div class="layer layer-4"></div>
-        <div class="layer layer-5"></div>
-        <div class="layer layer-6"></div>    
-      </div>
+
+                
+                <br>
 
 
+                {% if user.is_authenticated and article.user == user and not hide_delete %}
+                    <a href="{% url 'articles:delete' pk=article.pk %}" title="delete" class="btn btn-danger">
+                        <span class="glyphicon glyphicon-remove text-danger" aria-hidden="true"></span>
+                        <span class="text-danger icon-label">Delete</span>
+                    </a>
+                {% endif %}
+                <form method="post" action="{% url 'articles:like_article' article.pk %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-warning">
+                        <span class="glyphicon glyphicon-heart"></span> 
+                    </button>
+                </form>
+                
+                <form method="post" action="{% url 'articles:bookmark_article' article.pk %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-info">
+                        <span class="glyphicon glyphicon-bookmark"></span> 
+                    </button>
+                </form>
+                
+                
+            </div>
+        </div>
+    </div>
+
+    <div class="card-footer">
+        {% if article.posts.count == 0 %}
+            <h5>No comments available yet..</h5>
+            <h6><a href="{% url 'posts:specific' article_id=article.pk %}">Add comment+</a></h6>
+
+        {% else %}
+        <h6><a href="{% url 'posts:specific' article_id=article.pk %}">Add comment+</a></h6>
+
+            <h6><a href="{% url 'articles:single' username=article.user.username pk=article.pk %}">View Comments?</a></h6>
+
+        {% endif %}
+        {% if article.group %}
+        <div class="groupn">
+        <span class="group-name">
+             <a href="{% url 'groups:single' slug=article.group.slug %}">{{ article.group.name }}</a>
+        </span>
+    </div>
+    {% endif %}
+    </div>
+</div>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+{% endfor %}
 
 
+{% else %}
+<h2>LOGIN TO CONTINUE...</h2>
+<h3><a href="{% url 'accounts:login' %}">LOGIN</a></h3>
+{% endif %}
 {% endblock %}

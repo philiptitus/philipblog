@@ -1,0 +1,37 @@
+body{
+    background-color: black;
+    color: blanchedalmond;
+}
+a{
+    color:aquamarine;
+    
+
+}
+.btn{
+background-color: bisque;
+color: black;
+}
+.custom-card {
+    background-color: #000000;
+    border-radius: 35px;
+    padding: 20px;
+    justify-content: center;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    color: aliceblue;
+    word-spacing: normal;
+    height:min-content;
+       
+
+    /* Add more styles as needed */
+}
+
+
+
+
+.image{
+    width:fit-content;
+    border-radius: 20px;
+}
+.white-text {
+    color: white;
+}
